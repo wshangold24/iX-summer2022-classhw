@@ -6,10 +6,44 @@
         <title>Will Shangold iXperience Personal Landing Page</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="assets/css/style.css">
     </head>
     <body>
-        
-        <script src="index.js" async defer></script>
+        <h1>Hey, I'm Will!</h1>
+        <img src="assets/images/will.JPEG" alt="Picture of Will Shangold">
+        <h2><a href="https://github.com/wshangold24" target="_blank" onmouseenter="handleHoverGithubLink(0)" 
+            onmouseout="handleHoverExitGithubLink(0)">github: wshangold24</a></h2>
+        <h2><a href="https://github.com/shangold-will" target="_blank" onmouseenter="handleHoverGithubLink(1)" 
+            onmouseleave="handleHoverExitGithubLink(1)">alt github: shangold-will</a></h2>
+        <div id="main-content">
+            <p>
+                I'm so excited to start learning about Software Engineering at iXperience! Here's a bit about me.
+            </p>
+            <p>
+                I'm from East Setauket, New York and am home for the summer. 
+                I currently attend Washington University in St. Louis as a rising Junior. Coming into my first year at university, 
+                I was incredibly undecided regarding my major and ended up choosing a double major in Physics and History during my Spring semester. In the fall of my second year, I took Intro to Computer Science and fell in love with programming. 
+                Since then, I've switched to the Computer Science major (still keeping a minor in History) and have taken 5 more classes in the field, including Web Development and Data Structures and Algorithms. 
+            </p>
+            <p>
+                From iXperience, I hope to gain more insight regarding the different subfields within software engineering. 
+                As a new CS major, I'm trying to expose myself to as many facets of CS as possible. Currently, I'm considering becoming a full-stack software engineer, 
+                as I've grown to enjoy most parts of the development process (including both frontend and backend). This may change, 
+                but I hope to learn more about the SWE field as a whole as I start to plan my career after college.
+            </p>
+        </div>
+        <div id="resume-content">
+            <img src="assets/images/resume.png" alt="Picture of Will Shangold's Resume">
+        </div>
+
+        <div id="form-content">
+            <form>
+                <label for="text-field">Text Field: </label>
+                <input id="text-field" type="text" placeholder="type in anything">
+                <input type="checkbox">
+                <input type="radio">
+            </form>
+        </div>
+        <script src="assets/js/index.js" async defer></script>
     </body>
 </html>
