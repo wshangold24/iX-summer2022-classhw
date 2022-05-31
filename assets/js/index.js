@@ -18,6 +18,10 @@ function handleHoverGithubLink(linkNumber) {
 
     otherLinkIndex = Math.abs(linkNumber - 1);
 
+    let githubLink = document.getElementsByTagName("h2")[linkNumber].firstChild;
+    originalColor = githubLink.style.color;
+    githubLink.style.color = "#85B5E1";
+
     let otherGithubLink = document.getElementsByTagName("h2")[otherLinkIndex].firstChild;
     otherLinkOriginalColor = otherGithubLink.style.color;
     otherGithubLink.style.color = "#52575C";

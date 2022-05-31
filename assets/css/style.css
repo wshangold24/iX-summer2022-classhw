@@ -14,7 +14,7 @@
 
 */
 
-html, body {
+/* html, body {
     background-color: #C3D0DC;
     display: flex;
     flex-wrap: wrap;
@@ -106,4 +106,31 @@ div#form-content {
 div#form-content form label {
     color: #364A5C;
     font-family: 'Nunito', arial, sans-serif;
+} */
+
+
+
+html, body {
+    background-color: #C3D0DC;
+    font-family: 'Nunito', arial, sans-serif;
+    
+}
+
+img {
+    box-shadow: .3rem .3rem .3rem #85B5E1;
+}
+
+
+
+.light-gray {
+    color: #969FA8;
+}
+
+.dark-gray {
+    color: #52575C;
+}
+
+.light-blue {
+    color: #85B5E1;
+    
 }
