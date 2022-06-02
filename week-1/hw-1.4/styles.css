@@ -1,0 +1,16 @@
+div.container {
+    background-color: #E9ECEF;
+    border: 0.5px solid black;
+    border-radius: 3px;
+    min-width: 350px;
+    max-width: 600px;
+}
+
+#hint {
+    display: hidden;
+}
+
+div.container h2 {
+    font-size: 100%;
+    font-weight: 400;
+}
