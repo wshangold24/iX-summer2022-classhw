@@ -9,9 +9,11 @@ class Task {
     let newTaskRow = document.createElement("tr");
     let taskText = document.createElement("td");
     taskText.innerText = this.text;
-    if (id) {
-      newTaskRow.id = id;
-    }
+    if (id) newTaskRow.id = id;
+
+    // let taskTextInput = document.createElement("input");
+    // taskTextInput.setAttribute("class", "hidden w-100");
+    
 
     this.styleRow(newTaskRow);
     this.styleText(taskText);
@@ -20,7 +22,7 @@ class Task {
     let taskCompletedCheck = document.createElement("input");
     taskCompletedCheck.type = "checkbox";
     taskCompletedCheck.checked = this.completed;
-    
+
     this.handleCompletedCheck(newTaskRow, taskCompletedCheck);
 
     this.styleCheckBox(taskCompleted, taskCompletedCheck);
@@ -34,6 +36,7 @@ class Task {
     // let editButton = document.createElement("button");
 
     this.handleDeleteButton(newTaskRow, deleteButton);
+    this.handleUpdateButton(newTaskRow, updateButton, taskText);
     this.styleButtons(actions, actionButtonGroup, deleteButton, updateButton);
 
     actionButtonGroup.appendChild(deleteButton);
@@ -42,16 +45,17 @@ class Task {
 
     taskCompleted.appendChild(taskCompletedCheck);
 
+    // taskText.appendChild(taskTextInput);
+
     newTaskRow.appendChild(taskText);
     newTaskRow.appendChild(taskCompleted);
     newTaskRow.appendChild(actions);
 
     tableBody.appendChild(newTaskRow);
-
   }
 
   styleRow(row) {
-    row.className = "row w-100 text-center my-2 py-2";
+    row.className = "row w-100 text-center align-items-center my-2 py-2";
   }
 
   styleText(cell) {
@@ -96,10 +100,70 @@ class Task {
 
   handleDeleteButton(row, deleteBtn) {
     deleteBtn.addEventListener("click", (event) => {
-        event.preventDefault();
-        row.remove();
-        localStorage.removeItem(row.id);
+      event.preventDefault();
+      row.remove();
+      localStorage.removeItem(row.id);
     });
+  }
+
+  handleUpdateButton(row, updateBtn, text) {
+
+    updateBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        let prevText = text.innerText;
+        text.innerText = "";
+
+        let taskUpdateForm = document.createElement("form");
+        taskUpdateForm.className = "w-100 d-flex";
+        let updateSubmit = document.createElement("button");
+        let taskTextInput = document.createElement("input");
+
+        taskUpdateForm.appendChild(taskTextInput);
+        taskUpdateForm.appendChild(updateSubmit);
+
+        this.styleUpdateForm(taskUpdateForm, taskTextInput, updateSubmit);
+
+        taskTextInput.setAttribute("class", "w-100");
+        taskTextInput.value = prevText;
+        text.appendChild(taskUpdateForm);
+
+        taskUpdateForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            text.innerText = taskTextInput.value;
+            let taskObject = this.getSpecificTaskFromLocalStorage(row.id);
+            taskObject.text = taskTextInput.value;
+            this.updateExistingTaskToLocalStorage(taskObject, row.id);
+            taskUpdateForm.remove();
+            
+        });
+
+    });
+
+    // const header = document.getElementsByTagName("h2")[0];
+    // const addButton = document.getElementById("add-button");
+    // const textInput = document.getElementById("task-input");
+    // let taskObject = this.getSpecificTaskFromLocalStorage(row.id);
+
+    // deleteBtn.addEventListener("click", (event) => {
+    //   event.preventDefault();
+    //   header.innerText = "Please type what you want to update the task as:";
+        
+    // });
+
+    // if (
+    //   header.innerText === "Please type what you want to update the task as:"
+    // ) {
+    //   addButton.addEventListener("click", (event) => {
+    //     event.preventDefault();
+    //     row.children[0].innerText = textInput;
+    //     textInput = "";
+    //   });
+    // }
+  }
+
+  styleUpdateForm(form, text, btn) {
+    btn.className = "btn btn-secondary";
+    btn.innerText = "✔";
   }
 
   updateExistingTaskToLocalStorage(taskObject, key) {
@@ -128,10 +192,8 @@ function addTask() {
     saveTaskToLocalStorage(task);
     task.addTaskToTableBody();
     taskInput.value = "";
-    
   });
 }
-
 
 function saveTaskToLocalStorage(task) {
   let randomKey = (1000 * Math.random()).toFixed(0);
@@ -152,7 +214,6 @@ function getTasksFromLocalStorage() {
     task.addTaskToTableBody(key);
   }
 }
-
 
 getTasksFromLocalStorage();
 addTask();

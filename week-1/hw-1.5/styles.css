@@ -8,3 +8,11 @@
 thead {
     border-bottom: 1px solid black;
 }
+
+tr+tr {
+    border-bottom: .1px solid black;
+}
+
+.hidden {
+    display:none;
+}
