@@ -19,11 +19,8 @@ class Task {
     let taskCompleted = document.createElement("td");
     let taskCompletedCheck = document.createElement("input");
     taskCompletedCheck.type = "checkbox";
-    // if (!this.completed) {
-    //     taskCompletedCheck.checked = false;
-    // } else {
     taskCompletedCheck.checked = this.completed;
-    // }
+    
     this.handleCompletedCheck(newTaskRow, taskCompletedCheck);
 
     this.styleCheckBox(taskCompleted, taskCompletedCheck);
@@ -36,6 +33,7 @@ class Task {
     let updateButton = document.createElement("button");
     // let editButton = document.createElement("button");
 
+    this.handleDeleteButton(newTaskRow, deleteButton);
     this.styleButtons(actions, actionButtonGroup, deleteButton, updateButton);
 
     actionButtonGroup.appendChild(deleteButton);
@@ -50,7 +48,6 @@ class Task {
 
     tableBody.appendChild(newTaskRow);
 
-    // this.saveTaskToLocalStorage();
   }
 
   styleRow(row) {
@@ -97,6 +94,14 @@ class Task {
     });
   }
 
+  handleDeleteButton(row, deleteBtn) {
+    deleteBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        row.remove();
+        localStorage.removeItem(row.id);
+    });
+  }
+
   updateExistingTaskToLocalStorage(taskObject, key) {
     // console.log(key);
     let stringObject = JSON.stringify(taskObject);
@@ -120,9 +125,10 @@ function addTask() {
   addButton.addEventListener("click", (event) => {
     event.preventDefault();
     let task = new Task(taskInput.value, false);
+    saveTaskToLocalStorage(task);
     task.addTaskToTableBody();
     taskInput.value = "";
-    saveTaskToLocalStorage(task);
+    
   });
 }
 
@@ -141,17 +147,12 @@ function getTasksFromLocalStorage() {
   for (let i = localStorage.length - 1; i >= 0; i--) {
     let key = localStorage.key(i);
     let item = JSON.parse(localStorage.getItem(key));
-    console.log(item);
+    // console.log(item);
     let task = new Task(item.text, item.completed);
     task.addTaskToTableBody(key);
   }
 }
 
-// function getSpecificTaskFromLocalStorage(id) {
-//         let item = JSON.parse(localStorage.getItem(id));
-//         console.log(id, item);
-//         return item;
-// }
 
 getTasksFromLocalStorage();
 addTask();
