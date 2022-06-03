@@ -16,25 +16,39 @@
   <body>
     <div class="container w-75 mt-5 py-5 px-4">
       <h1 class="mx-auto text-center">Task List</h1>
-      <hr class="mx-auto w-75"/>
+      <hr class="mx-auto w-75" />
       <h2 class="mx-auto text-center mb-4">Our simple task list</h2>
       <div class="input-group mb-3">
-        <input type="text" class="form-control p-2 mx-auto" placeholder="Task" />
+        <input
+          id="task-input"
+          type="text"
+          class="form-control p-2 mx-auto"
+          placeholder="Task"
+        />
         <button class="btn btn-outline-secondary" type="button" id="add-button">
           +
         </button>
       </div>
       <table class="w-100">
-          <thead class="w-100">
-              <tr class="row w-100 text-center pb-2">
-                  <th class="col-sm-3">Task</th>
-                  <th class="col-sm-3">Completed</th>
-                  <th class="col-sm-6">Actions</th>
-              </tr>
-          </thead>
-          <tbody>
-
-          </tbody>
+        <thead class="w-100">
+          <tr class="row w-100 text-center pb-2">
+            <th class="col-sm-3">Task</th>
+            <th class="col-sm-3">Completed</th>
+            <th class="col-sm-6">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row w-100 text-center my-2 py-2">
+            <td class="col-sm-3">Example Text</td>
+            <td class="col-sm-3"><input type="checkbox" class="check"/></td>
+            <td class="col-sm-6">
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary">Delete</button>
+                <button type="button" class="btn btn-primary">Update</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
     <script
@@ -42,5 +56,6 @@
       integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
       crossorigin="anonymous"
     ></script>
+    <script src="script.js"></script>
   </body>
 </html>
