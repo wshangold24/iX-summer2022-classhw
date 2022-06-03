@@ -11,10 +11,6 @@ class Task {
     taskText.innerText = this.text;
     if (id) newTaskRow.id = id;
 
-    // let taskTextInput = document.createElement("input");
-    // taskTextInput.setAttribute("class", "hidden w-100");
-    
-
     this.styleRow(newTaskRow);
     this.styleText(taskText);
 
@@ -33,7 +29,6 @@ class Task {
 
     let deleteButton = document.createElement("button");
     let updateButton = document.createElement("button");
-    // let editButton = document.createElement("button");
 
     this.handleDeleteButton(newTaskRow, deleteButton);
     this.handleUpdateButton(newTaskRow, updateButton, taskText);
@@ -44,8 +39,6 @@ class Task {
     actions.appendChild(actionButtonGroup);
 
     taskCompleted.appendChild(taskCompletedCheck);
-
-    // taskText.appendChild(taskTextInput);
 
     newTaskRow.appendChild(taskText);
     newTaskRow.appendChild(taskCompleted);
@@ -81,16 +74,12 @@ class Task {
   }
 
   handleCompletedCheck(row, check) {
-    // console.log(row.id);
-    // console.log(check.checked);
 
     check.addEventListener("change", (event) => {
-      // console.log(check.checked);
       event.preventDefault();
       let taskObject = this.getSpecificTaskFromLocalStorage(row.id);
       console.log(taskObject);
       if (taskObject) {
-        // console.log(check.checked);
         taskObject.completed = check.checked;
 
         this.updateExistingTaskToLocalStorage(taskObject, row.id);
@@ -138,27 +127,6 @@ class Task {
         });
 
     });
-
-    // const header = document.getElementsByTagName("h2")[0];
-    // const addButton = document.getElementById("add-button");
-    // const textInput = document.getElementById("task-input");
-    // let taskObject = this.getSpecificTaskFromLocalStorage(row.id);
-
-    // deleteBtn.addEventListener("click", (event) => {
-    //   event.preventDefault();
-    //   header.innerText = "Please type what you want to update the task as:";
-        
-    // });
-
-    // if (
-    //   header.innerText === "Please type what you want to update the task as:"
-    // ) {
-    //   addButton.addEventListener("click", (event) => {
-    //     event.preventDefault();
-    //     row.children[0].innerText = textInput;
-    //     textInput = "";
-    //   });
-    // }
   }
 
   styleUpdateForm(form, text, btn) {
@@ -167,14 +135,12 @@ class Task {
   }
 
   updateExistingTaskToLocalStorage(taskObject, key) {
-    // console.log(key);
     let stringObject = JSON.stringify(taskObject);
     localStorage.setItem(key, stringObject);
   }
 
   getSpecificTaskFromLocalStorage(id) {
     let item = JSON.parse(localStorage.getItem(id));
-    // console.log(id, item);
     return item;
   }
 }
@@ -209,7 +175,6 @@ function getTasksFromLocalStorage() {
   for (let i = localStorage.length - 1; i >= 0; i--) {
     let key = localStorage.key(i);
     let item = JSON.parse(localStorage.getItem(key));
-    // console.log(item);
     let task = new Task(item.text, item.completed);
     task.addTaskToTableBody(key);
   }
@@ -217,4 +182,3 @@ function getTasksFromLocalStorage() {
 
 getTasksFromLocalStorage();
 addTask();
-// handleCompletedCheck();
