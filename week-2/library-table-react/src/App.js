@@ -1,21 +1,30 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import React from "react";
 import "./App.css";
 import Form from "./components/form/Form";
 import Table from "./components/table/Table";
 
 function App() {
+  let books = [{}];
   const [book, setBook] = useState({
-    title: "",
-    author: "",
-    isbn: "",
+    title: "harry potter",
+    author: "jk rowling",
+    isbn: "1234567890",
   });
 
   function getBook(title, author, isbn) {
-    setBook({ title: this.title, author: this.author, isbn: this.isbn });
-    console.log("book", book);
-    // console.log("title", title);
-    // console.log("author", author);
-    // console.log("isbn", isbn);
+    //Source: https://stackoverflow.com/questions/43638938/updating-an-object-with-setstate-in-react
+    setBook(
+      Object.assign(this.book, { title: title, author: author, isbn: isbn })
+    );
+    books.push({
+      title: title,
+      author: author,
+      isbn: isbn,
+    });
+
+    console.log("book", this.book);
+    return [this.book];
   }
 
   return (
@@ -23,7 +32,7 @@ function App() {
       <h1>Add Book:</h1>
       {/* <Form book={book} getBook={getBook}/> */}
       <Form book={book} sendBook={getBook} />
-      <Table />
+      <Table book={book} books={books} />
     </div>
   );
 }

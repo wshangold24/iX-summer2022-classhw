@@ -1,11 +1,12 @@
 import "./TableItem.css";
 
-function TableItem() {
+function TableItem(props) {
+
   return (
     <tr className="table-item row w-100 text-center mx-auto py-3 fw-normal">
-      <th className="col-sm-3">example</th>
-      <th className="col-sm-3">fsdfds</th>
-      <th className="col-sm-6">Actifdsjfkdslons</th>
+      <th className="col-3">{props.book.title}</th>
+      <th className="col-3">{props.book.author}</th>
+      <th className="col-6">{props.book.isbn}</th>
     </tr>
   );
 }

@@ -10,9 +10,9 @@ function Form(props) {
     function handleSubmit(event) {
         event.preventDefault();
         props.sendBook(title, author, isbn);
-        console.log("title", title);
-        console.log("author", author);
-        console.log("isbn", isbn);
+        // console.log("title", title);
+        // console.log("author", author);
+        // console.log("isbn", isbn);
     }
 
     function onTitleChange(event) {
@@ -28,6 +28,10 @@ function Form(props) {
     function onISBNChange(event) {
         isbn = event.target.value;
         
+    }
+
+    function handleSubmitInput(event) {
+        event.target.value = "";
     }
 
 
