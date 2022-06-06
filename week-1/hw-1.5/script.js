@@ -1,5 +1,5 @@
 class Task {
-  constructor(text, completed, action) {
+  constructor(text, completed) {
     this.text = text;
     this.completed = completed;
   }
@@ -74,7 +74,6 @@ class Task {
   }
 
   handleCompletedCheck(row, check) {
-
     check.addEventListener("change", (event) => {
       event.preventDefault();
       let taskObject = this.getSpecificTaskFromLocalStorage(row.id);
@@ -96,36 +95,33 @@ class Task {
   }
 
   handleUpdateButton(row, updateBtn, text) {
-
     updateBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      let prevText = text.innerText;
+      text.innerText = "";
+
+      let taskUpdateForm = document.createElement("form");
+      taskUpdateForm.className = "w-100 d-flex";
+      let updateSubmit = document.createElement("button");
+      let taskTextInput = document.createElement("input");
+
+      taskUpdateForm.appendChild(taskTextInput);
+      taskUpdateForm.appendChild(updateSubmit);
+
+      this.styleUpdateForm(taskUpdateForm, taskTextInput, updateSubmit);
+
+      taskTextInput.setAttribute("class", "w-100");
+      taskTextInput.value = prevText;
+      text.appendChild(taskUpdateForm);
+
+      taskUpdateForm.addEventListener("submit", (event) => {
         event.preventDefault();
-        let prevText = text.innerText;
-        text.innerText = "";
-
-        let taskUpdateForm = document.createElement("form");
-        taskUpdateForm.className = "w-100 d-flex";
-        let updateSubmit = document.createElement("button");
-        let taskTextInput = document.createElement("input");
-
-        taskUpdateForm.appendChild(taskTextInput);
-        taskUpdateForm.appendChild(updateSubmit);
-
-        this.styleUpdateForm(taskUpdateForm, taskTextInput, updateSubmit);
-
-        taskTextInput.setAttribute("class", "w-100");
-        taskTextInput.value = prevText;
-        text.appendChild(taskUpdateForm);
-
-        taskUpdateForm.addEventListener("submit", (event) => {
-            event.preventDefault();
-            text.innerText = taskTextInput.value;
-            let taskObject = this.getSpecificTaskFromLocalStorage(row.id);
-            taskObject.text = taskTextInput.value;
-            this.updateExistingTaskToLocalStorage(taskObject, row.id);
-            taskUpdateForm.remove();
-            
-        });
-
+        text.innerText = taskTextInput.value;
+        let taskObject = this.getSpecificTaskFromLocalStorage(row.id);
+        taskObject.text = taskTextInput.value;
+        this.updateExistingTaskToLocalStorage(taskObject, row.id);
+        taskUpdateForm.remove();
+      });
     });
   }
 
@@ -145,40 +141,69 @@ class Task {
   }
 }
 
+class TaskList extends Task {
+  constructor(
+    text,
+    completed,
+    tableBody,
+    addButton,
+    taskInput,
+    completedChecks,
+    taskRows
+  ) {
+    super(text, completed);
+    this.tableBody = tableBody;
+    this.addButton = addButton;
+    this.taskInput = taskInput;
+    this.completedChecks = completedChecks;
+    this.taskRows = taskRows;
+  }
+  addTask() {
+    addButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      let task = new Task(taskInput.value, false);
+      this.saveTaskToLocalStorage(task);
+      task.addTaskToTableBody();
+      taskInput.value = "";
+    });
+  }
+
+  saveTaskToLocalStorage(task) {
+    let randomKey = (1000 * Math.random()).toFixed(0);
+    let taskObject = {
+      text: task.text,
+      completed: task.completed,
+    };
+
+    localStorage.setItem(randomKey, JSON.stringify(taskObject));
+  }
+
+  getTasksFromLocalStorage() {
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      let key = localStorage.key(i);
+      let item = JSON.parse(localStorage.getItem(key));
+      let task = new Task(item.text, item.completed);
+      task.addTaskToTableBody(key);
+    }
+  }
+
+  generateTaskList() {
+    this.getTasksFromLocalStorage();
+    this.addTask();
+  }
+}
+
 const tableBody = document.getElementsByTagName("tbody")[0];
 const addButton = document.getElementById("add-button");
 const taskInput = document.getElementById("task-input");
 const completedChecks = document.getElementsByClassName("check");
 let taskRows = tableBody.children;
 
-function addTask() {
-  addButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    let task = new Task(taskInput.value, false);
-    saveTaskToLocalStorage(task);
-    task.addTaskToTableBody();
-    taskInput.value = "";
-  });
-}
-
-function saveTaskToLocalStorage(task) {
-  let randomKey = (1000 * Math.random()).toFixed(0);
-  let taskObject = {
-    text: task.text,
-    completed: task.completed,
-  };
-
-  localStorage.setItem(randomKey, JSON.stringify(taskObject));
-}
-
-function getTasksFromLocalStorage() {
-  for (let i = localStorage.length - 1; i >= 0; i--) {
-    let key = localStorage.key(i);
-    let item = JSON.parse(localStorage.getItem(key));
-    let task = new Task(item.text, item.completed);
-    task.addTaskToTableBody(key);
-  }
-}
-
-getTasksFromLocalStorage();
-addTask();
+let taskList = new TaskList(
+  tableBody,
+  addButton,
+  taskInput,
+  completedChecks,
+  taskRows
+);
+taskList.generateTaskList();
