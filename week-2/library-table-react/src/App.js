@@ -4,35 +4,30 @@ import "./App.css";
 import Form from "./components/form/Form";
 import Table from "./components/table/Table";
 
+// Helpful source for connecting table and form: https://medium.com/swlh/building-controlled-forms-using-functional-components-in-react-965d033a89bd
+
 function App() {
-  let books = [{}];
-  const [book, setBook] = useState({
-    title: "harry potter",
-    author: "jk rowling",
-    isbn: "1234567890",
-  });
+  const [books, setBooks] = useState([
+    {
+      title: "harry potter",
+      author: "jk rowling",
+      isbn: "1234567890",
+    },
+  ]);
 
-  function getBook(title, author, isbn) {
-    //Source: https://stackoverflow.com/questions/43638938/updating-an-object-with-setstate-in-react
-    setBook(
-      Object.assign(this.book, { title: title, author: author, isbn: isbn })
-    );
-    books.push({
-      title: title,
-      author: author,
-      isbn: isbn,
-    });
-
-    console.log("book", this.book);
-    return [this.book];
-  }
+  const addBook = (book) => {
+    let items = [...books, book];
+    setBooks(items);
+  };
+  useEffect(() => {
+    console.log("props", books);
+  }, [books.at(books.length - 1)]);
 
   return (
     <div className="App w-50 mx-auto mt-5 p-5">
       <h1>Add Book:</h1>
-      {/* <Form book={book} getBook={getBook}/> */}
-      <Form book={book} sendBook={getBook} />
-      <Table book={book} books={books} />
+      <Form addBooks={addBook} />
+      <Table books={books} />
     </div>
   );
 }
