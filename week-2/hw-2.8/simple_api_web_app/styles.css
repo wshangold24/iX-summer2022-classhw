@@ -1,0 +1,19 @@
+html {
+    background-color:darkslategrey;
+}
+
+body {
+    margin: 0px 0px;
+    color:azure;
+    background-color:darkslategrey;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+
+h1 {
+    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+}
+
+h2 {
+    font-size: 100%;
+}
