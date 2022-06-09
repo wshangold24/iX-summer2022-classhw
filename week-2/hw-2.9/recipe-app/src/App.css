@@ -1,0 +1,17 @@
+.App {
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+img {
+  text-align: center;
+  height: fit-content;
+}
+
+.card {
+  width: 90vw;
+}

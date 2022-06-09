@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 //import bootstrap styling from node_modules
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -12,29 +12,49 @@ import TaskInput from "./components/TaskInput";
 //import the Task class from the models folder
 import { Task } from "./models/task";
 
-export default function App() {
-  const [tasks, setTasks] = useState([
-    new Task(1, "Test 1", false),
-    new Task(2, "Test 2", true),
-  ]);
+//import firebase
+// import { db } from './firebase/firebase';
+import TaskService from "./services/task.service";
 
-  function onTaskCreate(name) {
+// console.log(db);
+
+export default function App() {
+  // const [tasks, setTasks] = useState([
+  //   new Task(1, "Test 1", false),
+  //   new Task(2, "Test 2", true),
+  // ]);
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  async function fetchTasks() {
+    const existingTasks = await TaskService.fetchTasks();
+    setTasks(existingTasks);
+  }
+
+  async function onTaskCreate(name) {
     console.log("App.js", name);
     //create the task
-    const task = new Task(new Date().getTime(), name, false);
+    // const task = new Task(new Date().getTime(), name, false);
+
+    const task = await TaskService.createTask(new Task(null, name, false));
 
     //add the task to the tasks state
     setTasks([...tasks, task]);
   }
 
-  function onTaskCompleteToggle(taskId) {
-    console.log(taskId);
+  async function onTaskCompleteToggle(taskId) {
     //toggle the task completed state
     const taskToToggle = tasks.find((task) => task.id === taskId);
-    console.log(taskToToggle);
 
     //update the tasks state
     taskToToggle.complete = !taskToToggle.complete;
+
+    //update the task in the firebase collection
+    await TaskService.updateTask(taskToToggle);
+
     setTasks(
       tasks.map((task) => {
         return task.id === taskId ? taskToToggle : task;
@@ -42,7 +62,10 @@ export default function App() {
     );
   }
 
-  function onTaskRemove(taskId) {
+  async function onTaskRemove(taskId) {
+    //delete the task from the firebase collection
+    await TaskService.deleteTask(taskId);
+
     //filter the tasks to keep tasks which don't have the id passed in
     //update the tasks state with the filtered list
     setTasks(
