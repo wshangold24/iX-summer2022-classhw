@@ -4,28 +4,12 @@ import { useState } from "react";
 export default function RecipeForm(props) {
   const [recipeName, setRecipeName] = useState("");
   const [recipeDesc, setRecipeDesc] = useState("");
-  let [recipe, setRecipe] = useState({
-      name: "",
-      desc: ""
-  });
 
   function onRecipeFormSubmit(e) {
     e.preventDefault();
-    // console.log(recipeName);
-    recipe = {
-        name: recipeName,
-        desc: recipeDesc
-    };
-    setRecipe(recipe);
-    // console.log(recipe);
-
     props.addRecipe(recipeName, recipeDesc);
     setRecipeName("");
     setRecipeDesc("");
-    setRecipe({
-        name: "",
-        desc: ""
-    });
   }
 
   return (
