@@ -3,7 +3,7 @@ import './RecipeList.css';
 
 export default function RecipeList(props) {
   return (
-    <div>
+    <div className="recipe-list">
       <table className="table">
         <thead>
           <tr>

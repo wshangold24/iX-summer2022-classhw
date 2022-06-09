@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
 
+import './RecipeForm.css';
+
 export default function RecipeForm(props) {
   const [recipeName, setRecipeName] = useState("");
   const [recipeDesc, setRecipeDesc] = useState("");
@@ -16,7 +18,7 @@ export default function RecipeForm(props) {
     <div>
       <form onSubmit={onRecipeFormSubmit} className="w-75 mx-auto">
         <div className="mb-3">
-          <label htmlFor="recipe-name-input" className="form-label">
+          <label htmlFor="recipe-name-input" className="w-100 form-label">
             Name
           </label>
           <input
@@ -29,13 +31,13 @@ export default function RecipeForm(props) {
           ></input>
         </div>
         <div className="mb-3">
-          <label htmlFor="recipe-desc-input" className="form-label">
+          <label htmlFor="recipe-desc-input" className="w-100 form-label">
             Description
           </label>
           <textarea
             className="form-control"
             id="recipe-desc-input"
-            rows="5"
+            rows="10"
             placeholder="Type in your recipe here"
             onChange={(e) => setRecipeDesc(e.target.value)}
             value={recipeDesc}

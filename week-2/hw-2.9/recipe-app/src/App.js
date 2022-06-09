@@ -5,22 +5,31 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import RecipeForm from "./components/RecipeForm";
 import RecipeList from "./components/RecipeList";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Recipe } from "./models/recipe";
+
+import RecipeService from './services/recipe.service';
 
 function App() {
   const [recipes, setRecipes] = useState([]);
 
-  async function addRecipe(name, desc) {
-    const recipe = new Recipe(recipes.length + 1, name, desc);
-    console.log(recipe);
+  useEffect(() => {
+    fetchRecipes();
+  }, []);
 
+  async function fetchRecipes() {
+    const existingRecipes = await RecipeService.fetchRecipes();
+    setRecipes(existingRecipes);
+  }
+
+  async function addRecipe(name, desc) {
+    const recipe = await RecipeService.createRecipe(new Recipe(null, name, desc))
     setRecipes([...recipes, recipe]);
-    setTimeout(console.log(recipes), 5000);
-    // console.log(recipes);
   }
 
   async function onRecipeRemove(recipeId) {
+    await RecipeService.deleteRecipe(recipeId);
+
     setRecipes(
       recipes.filter((r) => {
         return recipeId !== r.id;
@@ -29,7 +38,7 @@ function App() {
   }
 
   return (
-    <div className="App w-100 p-0">
+    <div className="App w-100 pb-5">
       <h1 className="my-3">Recipes</h1>
       <img
         className="w-25 mx-auto my-5"
