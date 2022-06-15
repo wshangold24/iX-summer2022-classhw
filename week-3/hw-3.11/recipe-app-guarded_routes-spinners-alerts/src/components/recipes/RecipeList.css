@@ -1,0 +1,40 @@
+.bi-trash {
+    background-color: rgba(255, 0, 0, 0.481);
+    border-radius: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.bi-trash:hover {
+    animation: trashRedHoverStart 500ms 1;
+    animation-timing-function:linear;
+    animation-fill-mode: forwards;
+}
+
+.bi-trash:not(:hover){
+    animation: trashRedHoverEnd 500ms 1;
+    animation-timing-function:linear;
+    animation-fill-mode:backwards;
+}
+
+@keyframes trashRedHoverStart {
+    from {
+        background-color: rgba(255, 0, 0, 0.481);
+    }
+
+    to {
+        background-color: rgba(255, 0, 0, 1.0);
+    }
+}
+
+@keyframes trashRedHoverEnd {
+    from {
+        background-color: rgba(255, 0, 0, 1.0);
+    }
+
+    to {
+        background-color: rgba(255, 0, 0, 0.481);
+    }
+}
