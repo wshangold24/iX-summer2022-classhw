@@ -1,10 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import ImageService from '../services/images.service';
 import FileService from '../services/file.service';
 
 import { Image } from '../models/image';
+import ImageSelector from './ImageSelector';
 
 export default function AddImagePage() {
 
@@ -12,9 +13,9 @@ export default function AddImagePage() {
 
   const [name, setName] = useState('');
   const [file, setFile] = useState(null);
-  const [fileDisplay, setFileDisplay] = useState('');
+  // const [fileDisplay, setFileDisplay] = useState('');
 
-  const inputRef = useRef(null);
+  // const inputRef = useRef(null);
 
   async function onFormSubmit(e) {
     e.preventDefault();
@@ -40,70 +41,36 @@ export default function AddImagePage() {
 
   }
 
-  function onFileSelected(e) {
-    let tempFile = null;
+  // function onFileSelected(e) {
+  //   let tempFile = null;
 
-    if (e.target.files.length) {
-      tempFile = e.target.files[0]
+  //   if (e.target.files.length) {
+  //     tempFile = e.target.files[0]
 
-      const reader = new FileReader();
+  //     const reader = new FileReader();
 
-      reader.onload = ((res) => {
-        setFileDisplay(res.target.result);
-      });
-      reader.readAsDataURL(tempFile);
-    } else {
-      setFileDisplay('');
-    }
-    setFile(tempFile);
-  }
+  //     reader.onload = ((res) => {
+  //       setFileDisplay(res.target.result);
+  //     });
+  //     reader.readAsDataURL(tempFile);
+  //   } else {
+  //     setFileDisplay('');
+  //   }
+  //   setFile(tempFile);
+  // }
 
   return (
     <div className='container my-4'>
+      <div className="d-flex justify-content-end mb-4">
+        <Link to="/">Go To Images</Link>
+      </div>
       <div className='card card-body'>
 
-        <h1>Add Image</h1>
+        <h1 className='text-center'>Add Image</h1>
 
         <form onSubmit={onFormSubmit}>
 
-          <div className="mb-3">
-            <label className="form-label">
-              Image
-            </label>
-            {
-              fileDisplay ?
-              <div className='text-center'>
-                <img style={{
-                  width: '250px',
-                  height: '250px',
-                  objectFit: 'cover'
-                }}
-                src={fileDisplay} alt="image">
-                </img>
-              </div>
-                :
-                <></>
-            }
-
-
-
-
-            <input
-              ref={inputRef}
-              onChange={onFileSelected}
-              type="file"
-              className="form-control"
-              multiple
-              style={{display: 'none'}}
-            />
-            <div className='text-center'>
-              <button type="button"
-              className='btn btn-success mt-3'
-              onClick={() => inputRef.current.click()}>
-                Choose Image
-              </button>
-            </div>
-          </div>
+          <ImageSelector title='Image Preview' onFileChange={setFile} />
 
           <div className="mb-3">
             <label className="form-label">

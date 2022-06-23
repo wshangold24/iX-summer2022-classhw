@@ -10,13 +10,14 @@ import {
   class FileService {
 
     async deleteImage(downloadUrl) {
+      //get reference of file to be deleted
       const fileRef = ref(storage, downloadUrl);
+      //delete object based on the file reference
       await deleteObject(fileRef);
     }
   
     uploadImage(file, onUploadProgress) {
       return new Promise((resolve, reject) => {
-  
         const fileRef = ref(storage, 'images/' + file.name);
         const uploadTask = uploadBytesResumable(fileRef, file);
         
