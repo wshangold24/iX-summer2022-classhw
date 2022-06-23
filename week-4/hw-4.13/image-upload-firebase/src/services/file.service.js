@@ -2,11 +2,17 @@ import {
     ref,
     uploadBytesResumable,
     getDownloadURL,
+    deleteObject,
   } from 'firebase/storage';
   
   import { storage } from '../firebase/firebase';
   
   class FileService {
+
+    async deleteImage(downloadUrl) {
+      const fileRef = ref(storage, downloadUrl);
+      await deleteObject(fileRef);
+    }
   
     uploadImage(file, onUploadProgress) {
       return new Promise((resolve, reject) => {

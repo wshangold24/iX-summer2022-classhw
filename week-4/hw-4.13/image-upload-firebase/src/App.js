@@ -16,8 +16,12 @@ export default function App() {
   }, []);
 
   async function fetchImages() {
+    try {
     const existingImages = await ImagesService.fetchImages();
     setImages(existingImages);
+    } catch (err) {
+      alert(err.message);
+    }
   }
 
   return (
