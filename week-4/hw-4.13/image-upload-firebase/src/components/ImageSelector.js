@@ -4,7 +4,7 @@ export default function ImageSelector({
     onFileChange, title
 }) {
 
-const [fileContent, setFileContent] = useState('');
+// const [fileContent, setFileContent] = useState('');
 const [fileDisplay, setFileDisplay] = useState('');
 
   const inputRef = useRef(null);
@@ -46,9 +46,6 @@ function onFileSelected(e) {
                 :
                 <></>
             }
-
-
-
 
             <input
               ref={inputRef}

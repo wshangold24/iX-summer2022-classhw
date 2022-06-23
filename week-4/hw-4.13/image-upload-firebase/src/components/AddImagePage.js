@@ -13,9 +13,6 @@ export default function AddImagePage() {
 
   const [name, setName] = useState('');
   const [file, setFile] = useState(null);
-  // const [fileDisplay, setFileDisplay] = useState('');
-
-  // const inputRef = useRef(null);
 
   async function onFormSubmit(e) {
     e.preventDefault();
@@ -40,24 +37,6 @@ export default function AddImagePage() {
     }
 
   }
-
-  // function onFileSelected(e) {
-  //   let tempFile = null;
-
-  //   if (e.target.files.length) {
-  //     tempFile = e.target.files[0]
-
-  //     const reader = new FileReader();
-
-  //     reader.onload = ((res) => {
-  //       setFileDisplay(res.target.result);
-  //     });
-  //     reader.readAsDataURL(tempFile);
-  //   } else {
-  //     setFileDisplay('');
-  //   }
-  //   setFile(tempFile);
-  // }
 
   return (
     <div className='container my-4'>

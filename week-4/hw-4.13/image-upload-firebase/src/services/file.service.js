@@ -9,7 +9,7 @@ import {
   
   class FileService {
 
-    async deleteImage(downloadUrl) {
+    async deleteFile(downloadUrl) {
       //get reference of file to be deleted
       const fileRef = ref(storage, downloadUrl);
       //delete object based on the file reference

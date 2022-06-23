@@ -3,6 +3,8 @@ import {
     query,
     getDocs,
     addDoc,
+    doc,
+    deleteDoc,
   } from 'firebase/firestore';
   
   import { db } from '../firebase/firebase';
@@ -35,6 +37,11 @@ import {
       });
   
       return images;
+    }
+
+    async deleteImage(imageId) {
+      const docRef = doc(db, this.collection, imageId);
+      await deleteDoc(docRef);
     }
   }
   
